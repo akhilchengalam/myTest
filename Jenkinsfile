@@ -1,5 +1,7 @@
 pipeline { 
-    agent any 
+    agent {
+        docker { image 'node:14-alpine' }
+    } 
     stages {
         stage('Checkout') { 
             steps { 
@@ -15,6 +17,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                sh 'docker-compose down -v'
                 sh 'docker-compose up'
             }
         }
